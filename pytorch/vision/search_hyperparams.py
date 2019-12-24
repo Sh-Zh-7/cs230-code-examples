@@ -23,6 +23,9 @@ def launch_training_job(parent_dir, data_dir, job_name, params):
         data_dir: (string) directory containing the dataset
         params: (dict) containing hyperparameters
     """
+    # 1. 创建文件夹
+    # 2. 在文件夹下创建.json文件（利用params类的save函数）
+    # 3. shell里面执行命令
     # Create a new folder in parent_dir with unique_name "job_name"
     model_dir = os.path.join(parent_dir, job_name)
     if not os.path.exists(model_dir):
@@ -40,6 +43,15 @@ def launch_training_job(parent_dir, data_dir, job_name, params):
 
 
 if __name__ == "__main__":
+    # 这个函数里面做这么几件事情：
+    # 1. 创建Params对象
+    # 2. 创建一个learning_rate的list
+    # 3. 根据learning_rate，确定文件夹的名字，传入我们的lanuching_training_job函数
+  
+  
+    # 我们只是修改params中的learning_rate，所以我们还是得从其他地方加载其他参数
+    # 这里的做法是在learning_rate文件夹下再放一个params.json的文件
+    # 然后我们从这个文件中加载参数
     # Load the "reference" parameters from parent_dir json file
     args = parser.parse_args()
     json_path = os.path.join(args.parent_dir, 'params.json')
