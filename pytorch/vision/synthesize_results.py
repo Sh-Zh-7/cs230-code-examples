@@ -22,6 +22,9 @@ def aggregate_metrics(parent_dir, metrics):
         parent_dir: (string) path to directory containing experiments results
         metrics: (dict) subdir -> {'accuracy': ..., ...}
     """
+    # 更改一个字典，其中键是子目录的名称，值是相应的字典
+    # 这里要解决的一个问题就是获得所有对应目录下的字典
+    
     # Get the metrics for the folder if it has results from an experiment
     metrics_file = os.path.join(parent_dir, 'metrics_val_best_weights.json')
     if os.path.isfile(metrics_file):
@@ -38,6 +41,8 @@ def aggregate_metrics(parent_dir, metrics):
 
 def metrics_to_table(metrics):
     # Get the headers from the first subdir. Assumes everything has the same metrics
+    # 这一步是获得所有的metrics
+    # 取第一个目录下所有的keys——也就是所有的accuracy
     headers = metrics[list(metrics.keys())[0]].keys()
     table = [[subdir] + [values[h] for h in headers] for subdir, values in metrics.items()]
     res = tabulate(table, headers, tablefmt='pipe')
@@ -46,6 +51,9 @@ def metrics_to_table(metrics):
 
 
 if __name__ == "__main__":
+     # 主要做这么几件事情：
+     # 1. 生成对应的table
+     # 2. 在控制台和result.md里写入我们的table
     args = parser.parse_args()
 
     # Aggregate metrics from args.parent_dir directory
